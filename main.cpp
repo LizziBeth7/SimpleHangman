@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
 
+//include the file that has the word options
 #include "WordsStore.h"
 
 int length = 0;
@@ -12,12 +13,14 @@ bool over = false;
 
 void getWord()
 {
+    //make sure input is valid before moving on
     bool inputAccepted = false;
     while (inputAccepted == false)
     {
         cout << "Enter a length between 4 and 7 for the secret word: ";
         cin >> length;
 
+        //use the computers time to get a random seed so the number is different each time the program runs
         srand(time(0));
         int index = rand() % 10;
 
@@ -46,6 +49,7 @@ void getWord()
             cout << "\nOpps! That input isn't quite right, lets try again.\n";
         }
     }
+    //give the user a list of spaces so correct letters can be added in later
     for (int i = 0; i < length - 1; i++)
     {
         solution = solution + "_";
@@ -55,7 +59,7 @@ void getWord()
 void checkWord()
 {
     int dash = solution.find("_");
-
+    //if there are no underscores in the current guess all the letters must be correct
     if (dash == string::npos)
     {
         cout << "YAY you win!!!\n";
@@ -65,6 +69,7 @@ void checkWord()
 
 void correctGuess()
 {
+    //check each character of the word to see if it matches the guessed letter, ensures double letters still show up as well
     for (int i = 0; i < length; i++)
     {
         if (word[i] == letter[0])
@@ -76,7 +81,7 @@ void correctGuess()
 }
 
 void printHangman()
-{
+{    //print the hangman ascii based on how many wrong guesses have been made
     if (wrongLetters.length() == 1)
     {
         cout << "-------" << endl;
@@ -171,6 +176,7 @@ void checkLetter()
     cout << "\n\nEnter the letter you want to guess: ";
     cin >> letter;
 
+    //check if letter is in word
     int location = word.find(letter);
 
     if (location != string::npos)
@@ -190,6 +196,7 @@ int main()
     getWord();
     cout << solution;
 
+    //run game until user wins or loses 
     while (over == false)
     {
         checkLetter();
@@ -198,3 +205,4 @@ int main()
 
     return 0;
 }
+
